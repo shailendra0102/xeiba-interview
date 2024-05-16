@@ -1,33 +1,27 @@
 import "./styles.css";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 
 export default function App() {
-  //   const [input1, setInput] = useState("");
   const [list, setList] = useState([]);
   const ref = useRef(null);
   const handler = () => {
-    console.log(ref.current.value);
-    list.push(ref.current.value);
-    setList([...list]);
-    // setInput(ref.current.value);
+    setList([...list, ref.current.value]);
     ref.current.value = "";
   };
-  const delete1 = (index) => {
-    const data = list.splice(index, 1);
-    // console.log(data);
-    // console.log("list", list);
-    setList([...list]);
+  const remove = (index) => {
+    setList(
+      list.filter((item, index2) => {
+        return index !== index2;
+      }),
+    );
   };
-  // useEffect(() => {
-  //   // console.log(ref.current);
-  // }, []);
   return (
     <div className="App">
       <input type="text" ref={ref} />
       <button onClick={handler}>Submit</button>
       <ul>
         {list.map((item, index) => (
-          <li key={index} onClick={() => delete1(index)}>
+          <li key={index} onClick={() => remove(index)}>
             {item}
           </li>
         ))}
